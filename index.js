@@ -5,47 +5,44 @@ emailjs
 
 
 
- let totalAmount = 0;
+ let cart = [];
 
-  function addItem(serviceName, price) {
-    const serviceItem = event.target.closest(".service-item");
+function updateCart() {
+  const cartContainer = document.getElementById("cart");
 
-    const addBtn = serviceItem.querySelector(".add");
-    const removeBtn = serviceItem.querySelector(".remove");
-
-    addBtn.style.display = "none";
-    removeBtn.style.display = "inline-block";
-
-    totalAmount += price;
-    document.getElementById("total").innerText = totalAmount;
-
-    console.log(serviceName + " added");
+  if (cart.length === 0) {
+    cartContainer.innerHTML = "<p>No items added</p>";
+    return;
   }
 
-  function removeItem(serviceName, price) {
-    const serviceItem = event.target.closest(".service-item");
+  cartContainer.innerHTML = "";
 
-    const addBtn = serviceItem.querySelector(".add");
-    const removeBtn = serviceItem.querySelector(".remove");
+  cart.forEach((item) => {
+    const div = document.createElement("div");
+    div.innerHTML = `${item.name} - ₹${item.price}`;
+    cartContainer.appendChild(div);
+  });
+}
+function addItem(name, price) {
+  cart.push({ name, price });
+  updateCart();
+}
+function removeItem(name) {
+  cart = cart.filter((item) => item.name !== name);
+  updateCart();
+}
 
-    removeBtn.style.display = "none";
-    addBtn.style.display = "inline-block";
-
-    totalAmount -= price;
-    document.getElementById("total").innerText = totalAmount;
-
-    console.log(serviceName + " removed");
-  }
 
 
 
 
 
-const scrollToServices = () => {
+
+function scrollToServices() {
   document.getElementById("services").scrollIntoView({
     behavior: "smooth"
   });
-};
+}
 
 
 

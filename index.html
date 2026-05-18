@@ -7,17 +7,17 @@
 
     <link rel="stylesheet" href="style.css" />
 
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "WqALCXd16gzeZaHJ1",
-      });
-   })();
-</script>
-   
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init({
+          publicKey: "WqALCXd16gzeZaHJ1",
+        });
+      })();
+    </script>
   </head>
   <body>
     <header class="nav-name">
@@ -28,9 +28,9 @@
       <nav>
         <ul>
           <a href="#home"><li>Home</li></a>
-          <a href="#services"><li>Services</li></a>
           <a href="#about us"><li>About us</li></a>
           <a href="#contact us"><li>Contact us</li></a>
+          <a href="#services "><li>Services</li></a>
         </ul>
       </nav>
       <div class="top">
@@ -188,21 +188,13 @@
         <div class="second-div">
           <h2>Book Now</h2>
 
-          <form id="contact-Form" method="post">
-            <input type="text" id="name" placeholder="Full Name" required />
-            <input type="email" id="email" placeholder="Email" required />
-            <input type="tel" id="phone" placeholder="Phone Number" required />
-
-            <button  class="btn-book" id="bookNow" onclick="sendMail()">Book Now</button>
-            <p
-            id="successMessage"
-            style="display: none; color: green; margin-top: 10px"
-          >
-            Thank you For Booking the Service We will get back to you soon!
-          </p>
+          <form id="bookingForm">
+            <input type="text" id="name" placeholder="Enter Name" required />
+            <input type="email" id="email" placeholder="Enter Email" required />
+            <button class="btn-book" type="submit" onclick="scrollService()">Book Now</button>
           </form>
 
-          
+          <p id="cartMessage"></p>
         </div>
       </div>
     </div>
@@ -248,7 +240,6 @@
             class="img"
             src="data:image/png;base64,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"
             alt=""
-            
           />
           <h5>Affordable Prices</h5>
           <p>
@@ -316,8 +307,11 @@
         </div>
       </div>
     </section>
-   
-     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
     <script src="index.js"></script>
   </body>
 </html>
